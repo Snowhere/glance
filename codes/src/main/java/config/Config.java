@@ -1,12 +1,15 @@
 package config;
 
 import com.jfinal.config.*;
+import com.jfinal.kit.Prop;
+import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
-import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
+import com.jfplugin.mail.MailPlugin;
 import controller.IndexController;
+import controller.UserController;
 import model.Code;
 import model.User;
 import model.UserAuth;
@@ -32,6 +35,8 @@ public class Config extends JFinalConfig {
      */
     public void configRoute(Routes me) {
         me.add("/", IndexController.class, "/WEB-INF/index");
+        me.add("/user", UserController.class, "/WEB-INF/user");
+        me.add("/code", UserController.class, "/WEB-INF/code");
     }
 
 
@@ -39,13 +44,20 @@ public class Config extends JFinalConfig {
      * 配置插件
      */
     public void configPlugin(Plugins me) {
+        Prop dbProp = PropKit.use("db.properties");
+        Prop redisProp = PropKit.use("redis.properties");
+        Prop smtpProp = PropKit.use("smtp.properties");
+
+        //email
+        me.add(new MailPlugin(smtpProp.getProperties()));
+
         // Redis
-        RedisPlugin redisPlugin = new RedisPlugin("", "127.0.0.1", "");
-        me.add(redisPlugin);
+        //RedisPlugin redisPlugin = new RedisPlugin(redisProp.get("cache"), redisProp.get("host"), redisProp.get("password"));
+        //me.add(redisPlugin);
 
         // 配置C3p0数据库连接池插件
         C3p0Plugin c3p0Plugin = new C3p0Plugin(
-                "jdbc:mysql://localhost/codes?useUnicode=true", "", "");
+                dbProp.get("host"), dbProp.get("username"), dbProp.get("password"));
         me.add(c3p0Plugin);
 
         // 配置ActiveRecord插

@@ -1,8 +1,7 @@
 package service;
 
-import com.jfinal.plugin.redis.Redis;
+import com.jfplugin.mail.MailKit;
 import model.User;
-import util.CacheName;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -43,5 +42,14 @@ public class UserService {
      */
     public int getUserNumber() {
         return userIds.size();
+    }
+
+    /**
+     * 发送验证邮件
+     * @param address
+     */
+    public boolean email(String address){
+        MailKit.send(address,null,"test","content test");
+        return true;
     }
 }
