@@ -12,6 +12,6 @@ import com.jfinal.aop.Invocation;
 public class LoginInterceptor implements Interceptor {
 
     public void intercept(Invocation invocation) {
-
+        invocation.invoke();
     }
 }

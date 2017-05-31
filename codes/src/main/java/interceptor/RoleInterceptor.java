@@ -4,7 +4,7 @@ import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 
 /**
- * user login state
+ * user role
  *
  * @author STH
  * @create 2017-05-12
@@ -12,6 +12,6 @@ import com.jfinal.aop.Invocation;
 public class RoleInterceptor implements Interceptor {
 
     public void intercept(Invocation invocation) {
-
+        invocation.invoke();
     }
 }
