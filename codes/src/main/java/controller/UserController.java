@@ -8,16 +8,12 @@ import util.Response;
 public class UserController extends Controller {
     UserService userService = new UserService();
 
-    /**
-     * 登录页
-     */
+    //登录页
     public void login() {
         renderJsp("login.jsp");
     }
 
-    /**
-     * 注册页
-     */
+    //注册页
     public void register() {
         renderJsp("login.jsp");
     }
