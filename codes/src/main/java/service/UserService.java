@@ -4,13 +4,12 @@ import com.jfinal.aop.Before;
 import com.jfinal.kit.HashKit;
 import com.jfinal.plugin.activerecord.tx.Tx;
 import com.jfplugin.mail.MailKit;
+import model.Code;
 import model.User;
 import model.UserAuth;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * User
@@ -23,7 +22,7 @@ public class UserService {
     public static List<Long> userIds = new LinkedList<>();
 
     static {
-        List<User> users = User.model.find("select id from `user`");
+        List<User> users = User.dao.find("select id from `user`");
         for (User user : users) {
             userIds.add(user.getLong("id"));
         }
@@ -51,7 +50,7 @@ public class UserService {
      * @return
      */
     @Before(Tx.class)
-    public boolean register(String nickName, String username, String password) {
+    public boolean register(String nickName, String username, String password,String type) {
         UserAuth userAuth = new UserAuth();
         User user = new User();
         Date now = new Date();
@@ -59,6 +58,7 @@ public class UserService {
         userAuth.set("identifier", username);
         userAuth.set("credential", HashKit.md5(password));
         userAuth.set("create_time", now);
+        userAuth.set("type", type);
 
         user.set("nickname", nickName);
         user.set("create_time", now);
@@ -79,9 +79,9 @@ public class UserService {
      * @return
      */
     public boolean login(HttpSession session, String username, String password) {
-        UserAuth userAuth = UserAuth.model.findFirst("select * from `user_auth` where identifier=? and credential=?", username, HashKit.md5(password));
-        if (userAuth != null) {
-            User user = User.model.findById(userAuth.getLong("user_id"));
+        UserAuth userAuth = UserAuth.dao.getUser( username, HashKit.md5(password));
+            if (userAuth != null) {
+            User user = User.dao.findById(userAuth.getLong("user_id"));
             if (user != null) {
                 session.setAttribute("user", user);
                 return true;
@@ -108,4 +108,18 @@ public class UserService {
         MailKit.send(address, null, "test", "content test");
         return true;
     }
+
+    /**
+     * 个人信息
+     * @param userId
+     * @return
+     */
+    public Map<String, Object> info(Long userId) {
+        Map<String, Object> info = new HashMap<>();
+        User user = User.dao.findById(userId);
+        List<UserAuth> userAuths = UserAuth.dao.findByUserId(userId);
+        List<Code> codes = Code.dao.findBySubmitter(userId);
+        return  info;
+    }
+
 }

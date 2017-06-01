@@ -9,5 +9,7 @@ import com.jfinal.plugin.activerecord.Model;
  * @create 2017-05-12
  **/
 public class User extends Model<User> {
-    public static User model = new User();
+    public static User dao = new User();
+
+
 }

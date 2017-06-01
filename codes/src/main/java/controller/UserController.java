@@ -1,9 +1,12 @@
 package controller;
 
 import com.jfinal.core.Controller;
+import model.User;
 import service.UserService;
 import util.ErrorEnum;
 import util.Response;
+
+import java.util.Map;
 
 public class UserController extends Controller {
     UserService userService = new UserService();
@@ -13,12 +16,27 @@ public class UserController extends Controller {
         renderJsp("login.jsp");
     }
 
-    //注册页
-    public void register() {
-        renderJsp("login.jsp");
+    //登出
+    public void logout() {
+        removeSessionAttr("user");
+        redirect("/");
     }
 
-    public void info() {
+    //注册页
+    public void register() {
+        renderJsp("register.jsp");
+    }
+
+    /**
+     * 个人信息
+     * /user/userId
+     * 区分本人和其他人查看
+     */
+    public void index() {
+        User currentUser = getSessionAttr("user");
+        Long userId = getParaToLong();
+        Map<String, Object> info = userService.info(userId);
+        setAttrs(info);
         renderJsp("info.jsp");
     }
 
@@ -51,10 +69,11 @@ public class UserController extends Controller {
         String sex = getPara("sex");
         String username = getPara("username");
         String password = getPara("password");
+        String type = getPara("type");
         boolean captcha = validateCaptcha("captcha");
 
         if (captcha) {
-            boolean login = userService.register(nickname, username, password);
+            boolean login = userService.register(nickname, username, password,type);
             if (!login) {
                 response.setError(ErrorEnum.REGISTER);
             }

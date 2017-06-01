@@ -29,7 +29,7 @@ CREATE TABLE `code` (
   `language` varchar(255) DEFAULT NULL COMMENT '语言',
   `tag` varchar(255) DEFAULT NULL COMMENT '标签',
   `others` varchar(255) DEFAULT NULL COMMENT '其他',
-  `user_id` bigint(20) DEFAULT NULL COMMENT '提交人',
+  `submitter` bigint(20) DEFAULT NULL COMMENT '提交人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
