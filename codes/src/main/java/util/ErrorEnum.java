@@ -14,6 +14,7 @@ public enum ErrorEnum {
 
     LOGIN(12345, "用户名或密码错误"),
     REGISTER(213, "注册失败"),
+    UNIQUE_USERNAME(213, "用户名重复"),
     ;
     private int code;
     private String msg;

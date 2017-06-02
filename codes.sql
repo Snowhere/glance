@@ -32,6 +32,7 @@ CREATE TABLE `code` (
   `submitter` bigint(20) DEFAULT NULL COMMENT '提交人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `weight` int(11) DEFAULT '0' COMMENT '排序权重',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100000 DEFAULT CHARSET=utf8mb4;
 

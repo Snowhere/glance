@@ -18,15 +18,7 @@ import java.util.*;
  * @create 2017-05-26
  **/
 public class UserService {
-    //缓存用户id列表
-    public static List<Long> userIds = new LinkedList<>();
 
-    static {
-        List<User> users = User.dao.find("select id from `user`");
-        for (User user : users) {
-            userIds.add(user.getLong("id"));
-        }
-    }
 
     /**
      * 创建新用户
@@ -37,7 +29,7 @@ public class UserService {
     public boolean createUser(User model) {
         boolean flag = model.save();
         if (flag) {
-            userIds.add(model.getLong("id"));
+            User.USER_IDS.add(model.getLong("id"));
         }
         return flag;
     }
@@ -50,7 +42,7 @@ public class UserService {
      * @return
      */
     @Before(Tx.class)
-    public boolean register(String nickName, String username, String password,String type) {
+    public boolean register(String nickName, String username, String password, String type) {
         UserAuth userAuth = new UserAuth();
         User user = new User();
         Date now = new Date();
@@ -65,7 +57,13 @@ public class UserService {
 
         if (user.save()) {
             userAuth.set("user_id", user.getLong("id"));
-            return userAuth.save();
+            if (userAuth.save()){
+                //缓存用户名
+                if (type.equals(UserAuth.TYPE_LOCAL)) {
+                    UserAuth.USER_NAMES.add(username);
+                }
+                return true;
+            }
         }
         return false;
     }
@@ -79,13 +77,10 @@ public class UserService {
      * @return
      */
     public boolean login(HttpSession session, String username, String password) {
-        UserAuth userAuth = UserAuth.dao.getUser( username, HashKit.md5(password));
-            if (userAuth != null) {
-            User user = User.dao.findById(userAuth.getLong("user_id"));
-            if (user != null) {
-                session.setAttribute("user", user);
-                return true;
-            }
+        User user = UserAuth.dao.getUser(username, HashKit.md5(password));
+        if (user != null) {
+            session.setAttribute("user", user);
+            return true;
         }
         return false;
     }
@@ -96,7 +91,7 @@ public class UserService {
      * @return
      */
     public int getUserNumber() {
-        return userIds.size();
+        return User.USER_IDS.size();
     }
 
     /**
@@ -111,6 +106,7 @@ public class UserService {
 
     /**
      * 个人信息
+     *
      * @param userId
      * @return
      */
@@ -119,7 +115,7 @@ public class UserService {
         User user = User.dao.findById(userId);
         List<UserAuth> userAuths = UserAuth.dao.findByUserId(userId);
         List<Code> codes = Code.dao.findBySubmitter(userId);
-        return  info;
+        return info;
     }
 
 }

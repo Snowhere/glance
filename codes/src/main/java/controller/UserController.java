@@ -2,6 +2,7 @@ package controller;
 
 import com.jfinal.core.Controller;
 import model.User;
+import model.UserAuth;
 import service.UserService;
 import util.ErrorEnum;
 import util.Response;
@@ -47,9 +48,7 @@ public class UserController extends Controller {
         Response response = new Response();
         String username = getPara("username");
         String password = getPara("password");
-        boolean captcha = validateCaptcha("captcha");
-
-        if (captcha) {
+        if (validateCaptcha("captcha")) {
             boolean login = userService.login(this.getSession(), username, password);
             if (!login) {
                 response.setError(ErrorEnum.LOGIN);
@@ -73,7 +72,7 @@ public class UserController extends Controller {
         boolean captcha = validateCaptcha("captcha");
 
         if (captcha) {
-            boolean login = userService.register(nickname, username, password,type);
+            boolean login = userService.register(nickname, username, password, type);
             if (!login) {
                 response.setError(ErrorEnum.REGISTER);
             }
@@ -81,6 +80,18 @@ public class UserController extends Controller {
             response.setError(ErrorEnum.IMG);
         }
 
+        renderJson(response);
+    }
+
+    /**
+     * 检查用户名是否唯一
+     */
+    public void uniqueUserName() {
+        Response response = new Response();
+        String username = getPara("username");
+        if (UserAuth.USER_NAMES.contains(username)) {
+            response.setError(ErrorEnum.UNIQUE_USERNAME);
+        }
         renderJson(response);
     }
 
