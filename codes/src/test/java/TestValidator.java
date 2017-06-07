@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
-import util.Validator;
+import validate.UserValidate;
+import validate.Validator;
 
 /**
  * Validator
@@ -22,10 +23,10 @@ public class TestValidator {
 
     @Test
     public void user() {
-        Assert.assertTrue(Validator.userName("asfsaf123"));
-        Assert.assertFalse(Validator.userName("1234"));
-        Assert.assertFalse(Validator.userName("____"));
-        Assert.assertFalse(Validator.userName("ads"));
-        Assert.assertFalse(Validator.userName("abcdefghijklmnopqrst"));
+        Assert.assertTrue(UserValidate.userName("asfsaf123"));
+        Assert.assertFalse(UserValidate.userName("1234"));
+        Assert.assertFalse(UserValidate.userName("____"));
+        Assert.assertFalse(UserValidate.userName("ads"));
+        Assert.assertFalse(UserValidate.userName("abcdefghijklmnopqrst"));
     }
 }
