@@ -1,7 +1,7 @@
 /*! dataGrid整合 Ajax请求,laypage分页组件和数据展示功能.By snowhere */
 ;!function (w) {
     var ME = {} || ME;
-    var DataGrid;
+    var DataGrid = {};
     DataGrid.loadData = function (option) {
         layer.load(1, {
             shade: [0.8, "#393D49"],
@@ -62,6 +62,7 @@
             }
         });
     }
+    w.ME = ME;
     w.ME.DataGrid = DataGrid;
 }(window);
 /* 
