@@ -10,6 +10,7 @@ import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
 import controller.IndexController;
 import controller.UserController;
+import interceptor.RoleInterceptor;
 import model.Code;
 import model.User;
 import model.UserAuth;
@@ -72,6 +73,7 @@ public class Config extends JFinalConfig {
 
     @Override
     public void configInterceptor(Interceptors me) {
+        me.add(new RoleInterceptor());
     }
 
     @Override

@@ -1,24 +1,28 @@
 package controller;
 
 import com.jfinal.core.Controller;
+import com.jfinal.kit.StrKit;
 import model.User;
 import model.UserAuth;
 import service.UserService;
 import util.ErrorEnum;
 import util.Response;
+import validate.UserValidate;
 
 import java.util.Map;
 
 public class UserController extends Controller {
+
     UserService userService = new UserService();
+    UserValidate userValidate = new UserValidate();
 
     //登录页
     public void login() {
         renderJsp("login.jsp");
     }
 
-    //登出
-    public void logout() {
+    //登出跳首页
+    public void userLogout() {
         removeSessionAttr("user");
         redirect("/");
     }
@@ -28,10 +32,16 @@ public class UserController extends Controller {
         renderJsp("register.jsp");
     }
 
+    //验证码
+    public void captcha() {
+        renderCaptcha();
+    }
+
     /**
      * 个人信息
      * /user/userId
      * 区分本人和其他人查看
+     * jsp
      */
     public void index() {
         User currentUser = getSessionAttr("user");
@@ -42,25 +52,26 @@ public class UserController extends Controller {
     }
 
     /**
-     * 登录ajax
+     * 登录
+     * ajax
      */
     public void userLogin() {
         Response response = new Response();
         String username = getPara("username");
         String password = getPara("password");
-        if (validateCaptcha("captcha")) {
-            boolean login = userService.login(this.getSession(), username, password);
-            if (!login) {
-                response.setError(ErrorEnum.LOGIN);
-            }
-        } else {
-            response.setError(ErrorEnum.IMG);
+        if (!validateCaptcha("captcha")) {
+            renderJson(response.setError(ErrorEnum.CAPTCHA));return;
+        }
+        if (!userService.login(this.getSession(), username, password)) {
+            response.setError(ErrorEnum.USER_LOGIN);
         }
         renderJson(response);
     }
 
+
     /**
-     * 注册ajax
+     * 注册
+     * ajax
      */
     public void userRegister() {
         Response response = new Response();
@@ -71,36 +82,43 @@ public class UserController extends Controller {
         String type = getPara("type");
         boolean captcha = validateCaptcha("captcha");
 
-        if (captcha) {
-            boolean login = userService.register(nickname, username, password, type);
-            if (!login) {
-                response.setError(ErrorEnum.REGISTER);
-            }
-        } else {
-            response.setError(ErrorEnum.IMG);
+        if (!StrKit.notBlank(nickname, username, password)) {
+            renderJson(response.setError(ErrorEnum.BLANK));
+            return;
         }
-
+        if (!captcha) {
+            renderJson(response.setError(ErrorEnum.CAPTCHA));
+            return;
+        }
+        if (!userValidate.checkName(username)) {
+            renderJson(response.setError(ErrorEnum.USER_NICKNAME));
+            return;
+        }
+        if (!userService.register(nickname, username, password, type)) {
+            response.setError(ErrorEnum.USER_REGISTER);
+        }
         renderJson(response);
     }
 
     /**
      * 检查用户名是否唯一
+     * ajax
      */
     public void uniqueUserName() {
         Response response = new Response();
         String username = getPara("username");
         if (UserAuth.USER_NAMES.contains(username)) {
-            response.setError(ErrorEnum.UNIQUE_USERNAME);
+            response.setError(ErrorEnum.USER_UNIQUE_USERNAME);
         }
         renderJson(response);
     }
 
-    /**
-     * 验证码
-     */
-    public void captcha() {
-        renderCaptcha();
+
+    public void getPopularUsers() {
+        Response response = new Response();
+        renderJson(response);
     }
+
 
     /**
      * 发送验证邮件

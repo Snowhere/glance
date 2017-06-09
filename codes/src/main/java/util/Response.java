@@ -21,14 +21,17 @@ public class Response {
      * 默认true
      */
     public Response() {
-        this.success = true;
-        this.code = 0;
-        this.msg = "成功";
+        this(true, 0, "成功", null);
     }
 
-    public void setError(ErrorEnum errorEnum) {
+    public Response(ErrorEnum errorEnum) {
+        this(false, errorEnum.getCode(), errorEnum.getMsg(), null);
+    }
+
+    public Response setError(ErrorEnum errorEnum) {
         this.success = false;
         this.code = errorEnum.getCode();
         this.msg = errorEnum.getMsg();
+        return this;
     }
 }

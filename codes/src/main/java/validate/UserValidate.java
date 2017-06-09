@@ -1,12 +1,9 @@
 package validate;
 
-import model.User;
-import util.ErrorEnum;
-
 import java.util.regex.Pattern;
 
 /**
- * email
+ * code
  *
  * @author STH
  * @create 2017-05-31
@@ -26,16 +23,11 @@ public class UserValidate {
      * @param text
      * @return
      */
-    public static boolean userName(String text) {
+    public boolean checkName(String text) {
         boolean format = Pattern.compile(USER_NAME).matcher(text).matches();
         boolean length = text.length() <= 17 && text.length() > 3;
         boolean line = !Pattern.compile(UNDER_LINE).matcher(text).matches();
         boolean number = !Pattern.compile(NUMBER).matcher(text).matches();
         return format && length && line && number;
-    }
-
-    public ErrorEnum validate(User user) {
-        ErrorEnum error = null;
-        return error;
     }
 }

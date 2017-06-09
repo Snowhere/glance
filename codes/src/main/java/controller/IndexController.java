@@ -6,5 +6,4 @@ public class IndexController extends Controller {
     public void index() {
         renderJsp("index.jsp");
     }
-
 }

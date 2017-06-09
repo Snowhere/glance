@@ -23,10 +23,10 @@ public class TestValidator {
 
     @Test
     public void user() {
-        Assert.assertTrue(UserValidate.userName("asfsaf123"));
-        Assert.assertFalse(UserValidate.userName("1234"));
-        Assert.assertFalse(UserValidate.userName("____"));
-        Assert.assertFalse(UserValidate.userName("ads"));
-        Assert.assertFalse(UserValidate.userName("abcdefghijklmnopqrst"));
+        Assert.assertTrue(UserValidate.checkName("asfsaf123"));
+        Assert.assertFalse(UserValidate.checkName("1234"));
+        Assert.assertFalse(UserValidate.checkName("____"));
+        Assert.assertFalse(UserValidate.checkName("ads"));
+        Assert.assertFalse(UserValidate.checkName("abcdefghijklmnopqrst"));
     }
 }
