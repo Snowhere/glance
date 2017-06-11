@@ -5,6 +5,7 @@ import com.jfinal.kit.StrKit;
 import model.User;
 import model.UserAuth;
 import service.UserService;
+import annotation.DI;
 import util.ErrorEnum;
 import util.Response;
 import validate.UserValidate;
@@ -12,9 +13,10 @@ import validate.UserValidate;
 import java.util.Map;
 
 public class UserController extends Controller {
-
-    UserService userService = new UserService();
-    UserValidate userValidate = new UserValidate();
+    @DI
+    UserService userService;
+    @DI
+    UserValidate userValidate;
 
     //登录页
     public void login() {

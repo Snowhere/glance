@@ -3,13 +3,15 @@ package service;
 import com.jfinal.aop.Before;
 import com.jfinal.kit.HashKit;
 import com.jfinal.plugin.activerecord.tx.Tx;
-import com.jfplugin.mail.MailKit;
 import model.Code;
 import model.User;
 import model.UserAuth;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * User
@@ -100,7 +102,8 @@ public class UserService {
      * @param address
      */
     public boolean email(String address) {
-        MailKit.send(address, null, "test", "content test");
+        ///MailKit.send(address, null, "test", "content test");
+        System.out.println("send email");
         return true;
     }
 

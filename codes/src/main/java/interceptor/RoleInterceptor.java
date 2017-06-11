@@ -6,7 +6,7 @@ import com.jfinal.core.Controller;
 import model.User;
 import util.ErrorEnum;
 import util.Response;
-import util.Role;
+import annotation.Role;
 
 import java.util.HashSet;
 import java.util.Set;
