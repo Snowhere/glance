@@ -1,19 +1,19 @@
 package controller;
 
-import com.jfinal.core.Controller;
+import annotation.DI;
+import annotation.Role;
 import model.Code;
 import service.CodeService;
-import annotation.Role;
 
-@Role(level = Role.Level.NORMAL, type = Role.RenderType.HTML)
-class CodeController extends Controller {
-
-    CodeService codeService = new CodeService();
+@Role(role = Role.RoleType.NORMAL, type = Role.RenderType.HTML)
+class CodeController extends BaseController {
+    @DI
+    CodeService codeService;
 
     /**
      * 列表
      */
-    @Role(level = Role.Level.REGIST, type = Role.RenderType.HTML)
+    @Role(role = Role.RoleType.REGISTER, type = Role.RenderType.HTML)
     public void list() {
         render("");
     }

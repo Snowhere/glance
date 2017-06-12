@@ -12,14 +12,20 @@ import java.lang.annotation.Target;
  * @author STH
  * @create 2017-06-09
  **/
-@Target({ElementType.TYPE,ElementType.METHOD})
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Role {
     //角色
-    public enum Level{NORMAL,REGIST,BIND, ADMIN}
-    //请求返回类型
-    public enum RenderType{JSON,HTML}
+    public enum RoleType {
+        NORMAL, REGISTER, BIND, ADMIN
+    }
 
-    public Level level() default Level.NORMAL;
-    public RenderType type() default RenderType.JSON;
+    //请求返回类型
+    public enum RenderType {
+        JSON, HTML
+    }
+
+    public RoleType role() default RoleType.NORMAL;
+
+    public RenderType type() default RenderType.HTML;
 }

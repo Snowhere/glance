@@ -1,8 +1,6 @@
 package controller;
 
-import com.jfinal.core.Controller;
-
-public class IndexController extends Controller {
+public class IndexController extends BaseController {
     public void index() {
         renderJsp("index.jsp");
     }

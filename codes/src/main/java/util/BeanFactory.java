@@ -16,7 +16,7 @@ public class BeanFactory {
         return instance;
     }
 
-    public <T> T getBean(Class<T> claz) {
+    private  <T> T getBean(Class<T> claz) {
         Object bean = map.get(claz.getName());
         try {
             if (bean == null) {
@@ -32,7 +32,7 @@ public class BeanFactory {
         return (T)bean;
     }
 
-    private <T> void inject(T bean) throws Exception {
+    private <T> void inject(T bean) throws IllegalAccessException {
         Class claz = bean.getClass();
         for (Field field : claz.getDeclaredFields()) {
             if (field.getAnnotation(DI.class) != null) {

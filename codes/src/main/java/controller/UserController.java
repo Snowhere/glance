@@ -1,18 +1,17 @@
 package controller;
 
-import com.jfinal.core.Controller;
+import annotation.DI;
 import com.jfinal.kit.StrKit;
 import model.User;
 import model.UserAuth;
 import service.UserService;
-import annotation.DI;
 import util.ErrorEnum;
 import util.Response;
 import validate.UserValidate;
 
 import java.util.Map;
 
-public class UserController extends Controller {
+public class UserController extends BaseController {
     @DI
     UserService userService;
     @DI
@@ -62,7 +61,8 @@ public class UserController extends Controller {
         String username = getPara("username");
         String password = getPara("password");
         if (!validateCaptcha("captcha")) {
-            renderJson(response.setError(ErrorEnum.CAPTCHA));return;
+            renderJson(response.setError(ErrorEnum.CAPTCHA));
+            return;
         }
         if (!userService.login(this.getSession(), username, password)) {
             response.setError(ErrorEnum.USER_LOGIN);
@@ -127,6 +127,7 @@ public class UserController extends Controller {
      */
     public void email() {
         String address = getPara();
+        log.info("123");
         userService.email(address);
     }
 }
