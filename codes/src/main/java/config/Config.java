@@ -45,8 +45,7 @@ public class Config extends JFinalConfig {
      * 配置插件
      */
     public void configPlugin(Plugins me) {
-        Prop dbProp = PropKit.use("db.properties");
-        Prop redisProp = PropKit.use("redis.properties");
+        Prop prop = PropKit.use("config.properties");
         Prop smtpProp = PropKit.use("smtp.properties");
 
         //email
@@ -58,7 +57,7 @@ public class Config extends JFinalConfig {
 
         // 配置C3p0数据库连接池插件
         C3p0Plugin c3p0Plugin = new C3p0Plugin(
-                dbProp.get("host"), dbProp.get("username"), dbProp.get("password"));
+                prop.get("db.host"), prop.get("db.username"), prop.get("db.password"));
         me.add(c3p0Plugin);
 
         // 配置ActiveRecord插
