@@ -16,7 +16,7 @@ public class BeanFactory {
         return instance;
     }
 
-    private  <T> T getBean(Class<T> claz) {
+    public  <T> T getBean(Class<T> claz) {
         Object bean = map.get(claz.getName());
         try {
             if (bean == null) {

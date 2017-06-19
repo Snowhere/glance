@@ -3,6 +3,7 @@ package service;
 import com.jfinal.aop.Before;
 import com.jfinal.kit.HashKit;
 import com.jfinal.plugin.activerecord.tx.Tx;
+import com.jfplugin.mail.MailKit;
 import model.Code;
 import model.User;
 import model.UserAuth;
@@ -102,7 +103,7 @@ public class UserService {
      * @param address
      */
     public boolean email(String address) {
-        ///MailKit.send(address, null, "test", "content test");
+        MailKit.send(address, null, "test", "content test");
         System.out.println("send email");
         return true;
     }

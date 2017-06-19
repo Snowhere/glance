@@ -126,7 +126,7 @@ public class UserController extends BaseController {
      * 发送验证邮件
      */
     public void email() {
-        String address = getPara();
+        String address = getPara("email");
         log.info("123");
         userService.email(address);
     }
