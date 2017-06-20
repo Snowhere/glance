@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-05-11 17:42:49
+Date: 2017-06-20 18:55:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `code`;
 CREATE TABLE `code` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `code` varchar(255) DEFAULT NULL COMMENT '代码',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   `dependency` varchar(255) DEFAULT NULL COMMENT '依赖',
@@ -38,6 +38,23 @@ CREATE TABLE `code` (
 
 -- ----------------------------
 -- Records of code
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for code_num
+-- ----------------------------
+DROP TABLE IF EXISTS `code_num`;
+CREATE TABLE `code_num` (
+  `code_id` bigint(20) NOT NULL,
+  `view` int(11) DEFAULT NULL COMMENT '查看数量',
+  `good` int(11) DEFAULT NULL COMMENT '赞数量',
+  `bad` int(11) DEFAULT NULL COMMENT '踩数量',
+  `report` int(11) DEFAULT NULL COMMENT '举报数量',
+  PRIMARY KEY (`code_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of code_num
 -- ----------------------------
 
 -- ----------------------------
