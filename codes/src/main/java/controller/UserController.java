@@ -22,9 +22,10 @@ public class UserController extends BaseController {
         renderJsp("login.jsp");
     }
 
-    //登出跳首页
-    public void userLogout() {
+    //登出(跳首页)
+    public void logout() {
         removeSessionAttr("user");
+        System.out.println(getSessionAttr("user"));
         redirect("/");
     }
 

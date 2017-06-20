@@ -1,13 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
     <%@include file="../css.jsp"%>
 </head>
 <body>
-<%@include file="../header.jsp"%>
-<h2>Chapter One</h2>
-<a href="/user/toLogin">login</a>
+500
 <%@include file="../js.jsp"%>
 </body>
 </html>

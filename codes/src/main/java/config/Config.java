@@ -27,8 +27,8 @@ public class Config extends JFinalConfig {
         me.setDevMode(true);
         me.setViewType(ViewType.JSP);
         me.setMaxPostSize(1024 * 1024 * 30);
-        me.setError404View("/WEB-INF/index/404.html");
-        me.setError500View("/WEB-INF/index/500.html");
+        me.setError404View("/WEB-INF/index/404.jsp");
+        me.setError500View("/WEB-INF/index/500.jsp");
     }
 
     /**
