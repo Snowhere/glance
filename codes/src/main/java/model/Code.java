@@ -45,7 +45,7 @@ public class Code extends Model<Code> {
     public static List<String> LANGUAGE_LIST = Arrays.asList(LAN_HTML,LAN_CSS,LAN_SWIFT,LAN_MAT,LAN_SHELL,LAN_GO,LAN_SCALA,LAN_R,LAN_C, LAN_JAVA, LAN_C2, LAN_OC, LAN_C3, LAN_PHP, LAN_SQL, LAN_NET, LAN_PY, LAN_JS, LAN_PERL, LAN_RUBY, LAN_PL, LAN_OP, LAN_VB, LAN_LISP, LAN_PA, LAN_OTHER);
 
     public List<Code> findBySubmitter(Long userId) {
-        return find("select * from `code` where submitter=", userId);
+        return find("select * from `code` where submitter=?", userId);
     }
 
     public Page<Code> pageBySubmitter(int pageNum, int pageSize, Long userId) {

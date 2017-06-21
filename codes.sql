@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-06-20 18:55:25
+Date: 2017-06-21 18:36:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -63,18 +63,19 @@ CREATE TABLE `code_num` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
+  `name` varchar(255) DEFAULT NULL COMMENT '昵称',
   `age` int(11) DEFAULT NULL COMMENT '年龄',
   `sex` varchar(255) DEFAULT NULL COMMENT '性别',
   `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `last_login_time` datetime DEFAULT NULL COMMENT '上次登录时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=100000 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES ('100000', 'aaaa', null, null, 'https://www.gravatar.com/avatar/2db2c4c244f8093953787d3d246b4d17', '2017-06-21 15:53:24', null);
 
 -- ----------------------------
 -- Table structure for user_auth
@@ -88,8 +89,9 @@ CREATE TABLE `user_auth` (
   `credential` varchar(255) DEFAULT NULL COMMENT '认证',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user_auth
 -- ----------------------------
+INSERT INTO `user_auth` VALUES ('1', '100000', 'local', 'aaaa', '74b87337454200d4d33f80c4663dc5e5', '2017-06-21 15:53:24');

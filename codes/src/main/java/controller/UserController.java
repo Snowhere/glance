@@ -3,7 +3,6 @@ package controller;
 import annotation.DI;
 import com.jfinal.kit.StrKit;
 import model.User;
-import model.UserAuth;
 import service.UserService;
 import util.ErrorEnum;
 import util.Response;
@@ -47,7 +46,7 @@ public class UserController extends BaseController {
      */
     public void index() {
         User currentUser = getSessionAttr("user");
-        Long userId = getParaToLong();
+        Long userId = getParaToLong(0);
         Map<String, Object> info = userService.info(userId);
         setAttrs(info);
         renderJsp("info.jsp");
@@ -78,14 +77,12 @@ public class UserController extends BaseController {
      */
     public void userRegister() {
         Response response = new Response();
-        String nickname = getPara("nickname");
-        String sex = getPara("sex");
         String username = getPara("username");
         String password = getPara("password");
         String type = getPara("type");
         boolean captcha = validateCaptcha("captcha");
 
-        if (!StrKit.notBlank(nickname, username, password)) {
+        if (!StrKit.notBlank(username, password)) {
             renderJson(response.setError(ErrorEnum.BLANK));
             return;
         }
@@ -97,7 +94,7 @@ public class UserController extends BaseController {
             renderJson(response.setError(ErrorEnum.USER_NICKNAME));
             return;
         }
-        if (!userService.register(nickname, username, password, type)) {
+        if (!userService.register(username, username, password, type)) {
             response.setError(ErrorEnum.USER_REGISTER);
         }
         renderJson(response);
@@ -110,9 +107,9 @@ public class UserController extends BaseController {
     public void uniqueUserName() {
         Response response = new Response();
         String username = getPara("username");
-        if (UserAuth.USER_NAMES.contains(username)) {
-            response.setError(ErrorEnum.USER_UNIQUE_USERNAME);
-        }
+        //if (UserAuth.USER_NAMES.contains(username)) {
+          //  response.setError(ErrorEnum.USER_UNIQUE_USERNAME);
+        //}
         renderJson(response);
     }
 

@@ -32,7 +32,7 @@ public class UserService {
     public boolean createUser(User model) {
         boolean flag = model.save();
         if (flag) {
-            User.USER_IDS.add(model.getLong("id"));
+            //User.USER_IDS.add(model.getLong("id"));
         }
         return flag;
     }
@@ -63,7 +63,7 @@ public class UserService {
             if (userAuth.save()){
                 //缓存用户名
                 if (type.equals(UserAuth.TYPE_LOCAL)) {
-                    UserAuth.USER_NAMES.add(username);
+                    //UserAuth.USER_NAMES.add(username);
                 }
                 return true;
             }
@@ -94,7 +94,8 @@ public class UserService {
      * @return
      */
     public int getUserNumber() {
-        return User.USER_IDS.size();
+        //return User.USER_IDS.size();
+        return 5;
     }
 
     /**

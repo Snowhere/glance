@@ -4,11 +4,14 @@
 ;!function (w) {
     var ME = {} || ME;
     var Handler = {};
+    Handler.errorMap = [];
+
+
     Handler.dealError = function (response) {
-        //TODO alert(response.msg);
-        switch (response.code) {
-            case 1:return true;
-            default:return false;
+        if (Handler.errorMap[response.code]) {
+            Handler.errorMap[response.code](response)
+        }else {
+            layer.alert(response.msg);
         }
     };
     w.ME = ME;

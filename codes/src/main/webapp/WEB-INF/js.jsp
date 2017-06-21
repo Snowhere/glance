@@ -12,3 +12,4 @@
 
 <!-- mine-->
 <script type="text/javascript" src="/js/datagrid.js"></script>
+<script type="text/javascript" src="/js/handler.js"></script>
