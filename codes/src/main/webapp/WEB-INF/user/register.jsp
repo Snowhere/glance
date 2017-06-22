@@ -13,7 +13,8 @@
         <div id="usernameDiv" class="form-group has-feedback">
             <label for="username" class="col-sm-3 control-label">用户名</label>
             <div class="col-sm-7">
-                <input type="text" required="required" class="form-control" id="username" placeholder="4-16位数字、字母、下划线，不能是纯数字或纯下划线">
+                <input type="text" required="required" class="form-control" id="username"
+                       placeholder="4-16位数字、字母、下划线，不能是纯数字或纯下划线">
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
@@ -48,6 +49,7 @@
 </div>
 <%@include file="../js.jsp" %>
 <script>
+    //校验
     function validUsername(value) {
         var format = /^[a-zA-Z0-9_]*$/.test(value);
         var length = value.length <= 17 && value.length > 3;
@@ -62,6 +64,10 @@
         return value == $('#password').val();
     }
 
+    //换验证码
+    function changeCaptcha() {
+        $('#captchaImg')[0].src = '/user/captcha?' + new Date().getTime();
+    }
     $('#username').blur(function () {
         ME.Handler.valid($('#usernameDiv'), $(this).val(), validUsername);
     });
@@ -71,13 +77,14 @@
     $('#repeat').blur(function () {
         ME.Handler.valid($('#repeatDiv'), $(this).val(), validRepeat);
     });
+
     //换验证码
     $('#captchaImg').click(function () {
-        this.src = '/user/captcha?' + new Date().getTime();
+        changeCaptcha();
     });
     //提交
     $('#submitForm').submit(function () {
-        if (ME.Handler.valid($('#usernameDiv'), $(this).val(), validUsername) && ME.Handler.valid($('#passwordDiv'), $(this).val(), validPassword) && ME.Handler.valid($('#repeatDiv'), $(this).val(), validRepeat)) {
+        if (ME.Handler.valid($('#usernameDiv'), $('#username').val(), validUsername) && ME.Handler.valid($('#passwordDiv'), $('#password').val(), validPassword) && ME.Handler.valid($('#repeatDiv'), $('#repeat').val(), validRepeat)) {
             $.getJSON('/user/userRegister', {
                 username: $('#username').val(),
                 password: $('#password').val(),
@@ -87,6 +94,7 @@
                 if (response.success) {
                     window.location.href = '/';
                 } else {
+                    changeCaptcha();
                     ME.Handler.dealError(response);
                 }
             });

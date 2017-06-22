@@ -3,10 +3,12 @@ package service;
 import com.jfinal.aop.Before;
 import com.jfinal.kit.HashKit;
 import com.jfinal.plugin.activerecord.tx.Tx;
+import com.jfinal.plugin.redis.Redis;
 import com.jfplugin.mail.MailKit;
 import model.Code;
 import model.User;
 import model.UserAuth;
+import util.CacheName;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -21,21 +23,6 @@ import java.util.Map;
  * @create 2017-05-26
  **/
 public class UserService {
-
-
-    /**
-     * 创建新用户
-     *
-     * @param model
-     * @return
-     */
-    public boolean createUser(User model) {
-        boolean flag = model.save();
-        if (flag) {
-            //User.USER_IDS.add(model.getLong("id"));
-        }
-        return flag;
-    }
 
     /**
      * 注册
@@ -55,7 +42,7 @@ public class UserService {
         userAuth.set("create_time", now);
         userAuth.set("type", type);
 
-        user.set("nickname", nickName);
+        user.set("name", nickName);
         user.set("create_time", now);
 
         if (user.save()) {
@@ -63,7 +50,7 @@ public class UserService {
             if (userAuth.save()){
                 //缓存用户名
                 if (type.equals(UserAuth.TYPE_LOCAL)) {
-                    //UserAuth.USER_NAMES.add(username);
+                    Redis.use().rpush(CacheName.USERS, username);
                 }
                 return true;
             }
@@ -93,9 +80,8 @@ public class UserService {
      *
      * @return
      */
-    public int getUserNumber() {
-        //return User.USER_IDS.size();
-        return 5;
+    public long getUserNumber() {
+        return Redis.use().llen(CacheName.USERS);
     }
 
     /**
@@ -122,5 +108,12 @@ public class UserService {
         List<Code> codes = Code.dao.findBySubmitter(userId);
         return info;
     }
-
+    /**
+     * 检查用户名是否唯一
+     * ajax
+     */
+    public boolean uniqueUserName(String username) {
+        List<String> usernames = Redis.use().lrange(CacheName.USERS,0,-1);
+        return usernames == null || !usernames.contains(username) ;
+    }
 }

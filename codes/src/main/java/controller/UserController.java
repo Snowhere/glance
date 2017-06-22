@@ -94,6 +94,10 @@ public class UserController extends BaseController {
             renderJson(response.setError(ErrorEnum.USER_NICKNAME));
             return;
         }
+        if (!userService.uniqueUserName(username)) {
+            renderJson(response.setError(ErrorEnum.USER_UNIQUE_USERNAME));
+            return;
+        }
         if (!userService.register(username, username, password, type)) {
             response.setError(ErrorEnum.USER_REGISTER);
         }
@@ -107,9 +111,9 @@ public class UserController extends BaseController {
     public void uniqueUserName() {
         Response response = new Response();
         String username = getPara("username");
-        //if (UserAuth.USER_NAMES.contains(username)) {
-          //  response.setError(ErrorEnum.USER_UNIQUE_USERNAME);
-        //}
+        if (userService.uniqueUserName(username)) {
+            response.setError(ErrorEnum.USER_UNIQUE_USERNAME);
+        }
         renderJson(response);
     }
 

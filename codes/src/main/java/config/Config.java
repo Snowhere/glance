@@ -5,6 +5,7 @@ import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
+import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
@@ -47,14 +48,13 @@ public class Config extends JFinalConfig {
      */
     public void configPlugin(Plugins me) {
         Prop prop = PropKit.use("config.properties");
-        Prop smtpProp = PropKit.use("smtp.properties");
 
         //email
-        me.add(new MailPlugin(smtpProp.getProperties()));
+        me.add(new MailPlugin(PropKit.use("smtp.properties").getProperties()));
 
         // Redis
-        //RedisPlugin redisPlugin = new RedisPlugin(redisProp.get("cache"), redisProp.get("host"), redisProp.get("password"));
-        //me.add(redisPlugin);
+        RedisPlugin redisPlugin = new RedisPlugin(prop.get("redis.cache"), prop.get("redis.host"), prop.get("redis.password"));
+        me.add(redisPlugin);
 
         // 配置C3p0数据库连接池插件
         C3p0Plugin c3p0Plugin = new C3p0Plugin(

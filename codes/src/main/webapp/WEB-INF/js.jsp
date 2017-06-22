@@ -13,3 +13,13 @@
 <!-- mine-->
 <script type="text/javascript" src="/js/datagrid.js"></script>
 <script type="text/javascript" src="/js/handler.js"></script>
+<script>
+    $.ajaxSetup({
+        error: function () {
+            layer.alert("/(ㄒoㄒ)/~~哎呀，服务器有问题了，请刷新后再试试");
+            if(changeCaptcha) {
+                changeCaptcha();
+            }
+        }
+    });
+</script>
