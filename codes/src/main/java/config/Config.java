@@ -8,6 +8,7 @@ import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
+import controller.CodeController;
 import controller.IndexController;
 import controller.UserController;
 import interceptor.RoleInterceptor;
@@ -37,7 +38,7 @@ public class Config extends JFinalConfig {
     public void configRoute(Routes me) {
         me.add("/", IndexController.class, "/WEB-INF/index");
         me.add("/user", UserController.class, "/WEB-INF/user");
-        me.add("/code", UserController.class, "/WEB-INF/code");
+        me.add("/code", CodeController.class, "/WEB-INF/code");
     }
 
 

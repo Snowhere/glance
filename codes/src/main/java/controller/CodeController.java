@@ -5,8 +5,7 @@ import annotation.Role;
 import model.Code;
 import service.CodeService;
 
-@Role(role = Role.RoleType.NORMAL, type = Role.RenderType.HTML)
-class CodeController extends BaseController {
+public class CodeController extends BaseController {
     @DI
     CodeService codeService;
 
@@ -25,6 +24,9 @@ class CodeController extends BaseController {
         render("");
     }
 
+    public void search() {
+        renderJsp("list.jsp");
+    }
     /**
      * 语言列表
      */

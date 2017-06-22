@@ -25,7 +25,7 @@ public class UserValidate {
      */
     public boolean checkName(String text) {
         boolean format = Pattern.compile(USER_NAME).matcher(text).matches();
-        boolean length = text.length() <= 17 && text.length() > 3;
+        boolean length = text.length() < 17 && text.length() > 3;
         boolean line = !Pattern.compile(UNDER_LINE).matcher(text).matches();
         boolean number = !Pattern.compile(NUMBER).matcher(text).matches();
         return format && length && line && number;

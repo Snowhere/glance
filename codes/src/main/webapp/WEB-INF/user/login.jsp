@@ -10,16 +10,18 @@
 <div class="container center-block">
     <h2>登录</h2>
     <form id="submitForm" class="form-horizontal">
-        <div class="form-group has-feedback">
+        <div id="usernameDiv" class="form-group has-feedback">
             <label for="username" class="col-sm-3 control-label">用户名</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" id="username" placeholder="用户名/邮箱/手机号">
+                <input type="text" required="required" class="form-control" id="username" placeholder="用户名/邮箱/手机号">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
-        <div class="form-group has-feedback">
+        <div id="passwordDiv" class="form-group has-feedback">
             <label for="password" class="col-sm-3 control-label">密码</label>
             <div class="col-sm-7">
-                <input type="password" class="form-control" id="password" placeholder="password">
+                <input type="password" required="required" class="form-control" id="password" placeholder="password">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
 
@@ -28,7 +30,7 @@
             <label class="col-sm-3 control-label">验证码</label>
             <div class="col-sm-7">
                 <a href="#" class="col-sm-2"><img id="captchaImg" src="/user/captcha"></img></a>
-                <input class="form-control col-sm-3" id="captcha" placeholder="captcha">
+                <input required="required" class="form-control col-sm-3" id="captcha" placeholder="captcha">
             </div>
         </div>
         <div class="form-group">
@@ -46,14 +48,14 @@
     });
     $('#submitForm').submit(function () {
         $.getJSON('/user/userLogin', {
-            username:$('#username').val(),
-            password:$('#password').val(),
-            captcha:$('#captcha').val(),
-            type:'local'
+            username: $('#username').val(),
+            password: $('#password').val(),
+            captcha: $('#captcha').val(),
+            type: 'local'
         }, function (response) {
-            if(response.success) {
-                window.location.href='/';
-            }else {
+            if (response.success) {
+                window.location.href = '/';
+            } else {
                 ME.Handler.dealError(response);
             }
         });

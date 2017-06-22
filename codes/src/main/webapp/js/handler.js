@@ -14,6 +14,22 @@
             layer.alert(response.msg);
         }
     };
+    Handler.valid=function(dom,value,valid){
+        var ico = dom.find('span')
+        if(valid(value)){
+            dom.removeClass('has-error');
+            dom.addClass('has-success');
+            ico.removeClass('glyphicon-remove');
+            ico.addClass('glyphicon-ok');
+            return true;
+        }else {
+            dom.removeClass('has-success');
+            dom.addClass('has-error');
+            ico.removeClass('glyphicon-ok');
+            ico.addClass('glyphicon-remove');
+            return false;
+        }
+    }
     w.ME = ME;
     w.ME.Handler = Handler;
 }(window);

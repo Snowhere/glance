@@ -10,28 +10,25 @@
 <div class="container center-block">
     <h2>注册</h2>
     <form id="submitForm" class="form-horizontal">
-        <div class="form-group has-success has-feedback">
-            <label for="username" class="col-sm-3 control-label">用户名(用于登录和展示)</label>
+        <div id="usernameDiv" class="form-group has-feedback">
+            <label for="username" class="col-sm-3 control-label">用户名</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" id="username" placeholder="4-16位数字和字母">
-                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                <span class="sr-only">(success)</span>
+                <input type="text" required="required" class="form-control" id="username" placeholder="4-16位数字、字母、下划线，不能是纯数字或纯下划线">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
-        <div class="form-group has-success has-feedback">
+        <div id="passwordDiv" class="form-group has-feedback">
             <label for="password" class="col-sm-3 control-label">密码</label>
             <div class="col-sm-7">
-                <input type="password" class="form-control" id="password" placeholder="password">
-                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                <span class="sr-only">(success)</span>
+                <input type="password" required="required" class="form-control" id="password" placeholder="输入密码">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
-        <div class="form-group has-success has-feedback">
+        <div id="repeatDiv" class="form-group has-feedback">
             <label for="repeat" class="col-sm-3 control-label">确认密码</label>
             <div class="col-sm-7">
-                <input type="password" class="form-control" id="repeat" placeholder="repeat">
-                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                <span class="sr-only">(success)</span>
+                <input type="password" required="required" class="form-control" id="repeat" placeholder="重复一遍密码">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
 
@@ -39,7 +36,7 @@
             <label class="col-sm-3 control-label">验证码</label>
             <div class="col-sm-7">
                 <a href="#" class="col-sm-2"><img id="captchaImg" src="/user/captcha"></img></a>
-                <input class="form-control col-sm-3" id="captcha" placeholder="captcha">
+                <input required="required" class="form-control col-sm-3" id="captcha" placeholder="captcha">
             </div>
         </div>
         <div class="form-group">
@@ -51,24 +48,49 @@
 </div>
 <%@include file="../js.jsp" %>
 <script>
+    function validUsername(value) {
+        var format = /^[a-zA-Z0-9_]*$/.test(value);
+        var length = value.length <= 17 && value.length > 3;
+        var line = /^_+$/.test(value);
+        var number = /^\\d+$/.test(value);
+        return format && length && !line && !number;
+    }
+    function validPassword(value) {
+        return value.length > 0;
+    }
+    function validRepeat(value) {
+        return value == $('#password').val();
+    }
+
+    $('#username').blur(function () {
+        ME.Handler.valid($('#usernameDiv'), $(this).val(), validUsername);
+    });
+    $('#password').blur(function () {
+        ME.Handler.valid($('#passwordDiv'), $(this).val(), validPassword);
+    });
+    $('#repeat').blur(function () {
+        ME.Handler.valid($('#repeatDiv'), $(this).val(), validRepeat);
+    });
     //换验证码
     $('#captchaImg').click(function () {
         this.src = '/user/captcha?' + new Date().getTime();
     });
     //提交
     $('#submitForm').submit(function () {
-        $.getJSON('/user/userRegister', {
-            username:$('#username').val(),
-            password:$('#password').val(),
-            captcha:$('#captcha').val(),
-            type:'local'
-        }, function (response) {
-            if(response.success) {
-                window.location.href='/';
-            }else {
-                ME.Handler.dealError(response);
-            }
-        });
+        if (ME.Handler.valid($('#usernameDiv'), $(this).val(), validUsername) && ME.Handler.valid($('#passwordDiv'), $(this).val(), validPassword) && ME.Handler.valid($('#repeatDiv'), $(this).val(), validRepeat)) {
+            $.getJSON('/user/userRegister', {
+                username: $('#username').val(),
+                password: $('#password').val(),
+                captcha: $('#captcha').val(),
+                type: 'local'
+            }, function (response) {
+                if (response.success) {
+                    window.location.href = '/';
+                } else {
+                    ME.Handler.dealError(response);
+                }
+            });
+        }
         return false;
     });
 </script>
