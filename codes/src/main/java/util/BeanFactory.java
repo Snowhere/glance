@@ -16,7 +16,7 @@ public class BeanFactory {
         return instance;
     }
 
-    public  <T> T getBean(Class<T> claz) {
+    public <T> T getBean(Class<T> claz) {
         Object bean = map.get(claz.getName());
         try {
             if (bean == null) {
@@ -27,9 +27,7 @@ public class BeanFactory {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        return (T)bean;
+        return (T) bean;
     }
 
     private <T> void inject(T bean) throws IllegalAccessException {
@@ -40,7 +38,7 @@ public class BeanFactory {
                 if (!field.isAccessible()) {
                     field.setAccessible(true);
                 }
-                field.set(bean,o);
+                field.set(bean, o);
             }
         }
     }
