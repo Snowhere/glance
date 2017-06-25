@@ -1,8 +1,7 @@
 /**
  * Created by Administrator on 2017/6/2.
  */
-;!function (w) {
-    var ME = {} || ME;
+var ME = (function (me) {
     var Handler = {};
     Handler.errorMap = [];
 
@@ -14,15 +13,15 @@
             layer.alert(response.msg);
         }
     };
-    Handler.valid=function(dom,value,valid){
+    Handler.valid=function(dom,value,valid) {
         var ico = dom.find('span')
-        if(valid(value)){
+        if (valid(value)) {
             dom.removeClass('has-error');
             dom.addClass('has-success');
             ico.removeClass('glyphicon-remove');
             ico.addClass('glyphicon-ok');
             return true;
-        }else {
+        } else {
             dom.removeClass('has-success');
             dom.addClass('has-error');
             ico.removeClass('glyphicon-ok');
@@ -30,6 +29,5 @@
             return false;
         }
     }
-    w.ME = ME;
-    w.ME.Handler = Handler;
-}(window);
+    me.Handler = Handler;
+})(ME||{});

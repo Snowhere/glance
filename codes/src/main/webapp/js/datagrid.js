@@ -1,7 +1,41 @@
 /*! dataGrid整合 Ajax请求,laypage分页组件和数据展示功能.By snowhere */
 ;!function (w) {
-    var ME = {} || ME;
+    var me = w.ME ||{};
     var DataGrid = {};
+    /**
+     * 1.object，递归解析
+     * 2.list，遍历
+     * 3.其他情况直接填充
+     * @param name 名称路径 data-array & data-iter , data-obj , data-name
+     * @param data 数据
+     * @param view 注入数据的jquery对象
+     */
+    var fill = function(name,data,view) {
+        //数组
+        if ($.isArray(data)) {
+            //找到数组模板,获取迭代名称
+            var arrayView = view.find('[data-array=' + name + ']');
+            var arrayName = arrayView.attr('data-iter');
+            $.each(data, function (index, value) {
+                var temp = arrayView.clone();
+                temp.attr('data-view', 'data');
+                temp.appendTo(arrayView.parent());
+                temp.show();
+                fill(arrayName, value, temp);
+            });
+        }
+        //对象
+        else if (typeof data == 'object' && data != null) {
+            $.each(data, function (key, value) {
+                fill(key, value, view);
+            });
+        }
+        //其他
+        else {
+            var dataView = view.find('[data-name=' + name + ']');
+            dataView.html(data);
+        }
+    }
     DataGrid.loadData = function (option) {
         layer.load(1, {
             shade: [0.8, "#393D49"],
@@ -14,7 +48,8 @@
             dataType: "json",
             success: function (msg) {
                 layer.closeAll("loading");
-                $(".datagrid").remove();
+                $('[data-view="data"]').remove();
+                var msg = msg.obj;
                 if (msg.list && msg.list.length) {
                     /*
                      *有数据
@@ -34,20 +69,8 @@
                     }
                     laypage($.extend(pageOption, option.page));
                     //数据填充
-                    for (var i = 0; i < msg.list.length; i++) {
-                        var temp = option.dataDiv.clone();
-                        for (var j = 0; j < option.rules.length; j++) {
-                            var value = msg.list[i][option.rules[j].name];
-                            if (option.rules[j].formatter) {
-                                value = option.rules[j].formatter(i, msg.list[i]);
-                            }
-                            //填充value
-                            $(temp.children("li").get(j)).html(value);
-                        }
-                        temp.css("display", "block");
-                        temp.addClass("datagrid");
-                        temp.appendTo(option.dataDiv.parent());
-                    }
+                    option.dataDiv.find('[data],[data-array]').hide();
+                    fill('list', msg.list, option.dataDiv);
                     option.successFun(msg);
                 } else {
                     /*
@@ -62,8 +85,9 @@
             }
         });
     }
-    w.ME = ME;
-    w.ME.DataGrid = DataGrid;
+    me.DataGrid = DataGrid;
+
+    w.ME = me;
 }(window);
 /* 
  * option格式

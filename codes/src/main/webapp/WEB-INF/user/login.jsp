@@ -40,6 +40,7 @@
         </div>
     </form>
 </div>
+<%@include file="../footer.jsp" %>
 <%@include file="../js.jsp" %>
 <script>
     //换验证码

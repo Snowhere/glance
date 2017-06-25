@@ -6,7 +6,7 @@
 </head>
 <body>
 <%@include file="../header.jsp"%>
-
+<%@include file="../footer.jsp" %>
 <%@include file="../js.jsp"%>
 </body>
 </html>
