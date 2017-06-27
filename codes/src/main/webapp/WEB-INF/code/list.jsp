@@ -51,6 +51,9 @@
         .user {
             float: left;
         }
+        .page{
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -76,17 +79,17 @@
 <script id="listTemplate" type="text/x-jquery-tmpl">
 <div class="record clearfix" style="position:relative">
     <div class="f1 code-main clearfix">
-        <div class="tittle">${title}</div>
+        <div class="tittle">@{title}</div>
         <div class="code">
-            <pre>${code}</pre>
+            <pre>@{code}</pre>
             <a class="toggle-code"></a>
         </div>
     </div>
-    <div class="f1 value">${value}</div>
-    <div class="language">${language}</div>
+    <div class="f1 value">@{value}</div>
+    <div class="language">@{language}</div>
     <div class="tag">
         {{each tags}}
-        <span class="label label-info">${$value}</span>
+        <span class="label label-info">@{@value}</span>
         {{/each}}
     </div>
     <div class="user">用户</div>

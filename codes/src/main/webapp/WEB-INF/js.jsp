@@ -24,4 +24,9 @@
             }
         }
     });
+    // jquery tmpl $被jsp jstl占用
+    $.fn.tpl = function(data){
+        $.template('template', $(this).html().replace(/@/g,"$"));
+        return $.tmpl('template', data);
+    }
 </script>

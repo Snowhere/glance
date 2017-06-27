@@ -35,7 +35,7 @@
                     }
                     laypage($.extend(pageOption, option.page));
                     //数据填充
-                    $('#listTemplate').tmpl(obj.list).appendTo('#dataList');
+                    $('#listTemplate').tpl(obj.list).appendTo('#dataList');
                     option.successFun(obj);
                 } else {
                     /*
