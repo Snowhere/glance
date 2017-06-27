@@ -57,24 +57,7 @@
 <%@include file="../header.jsp" %>
 <div class="container center-block">
     <div class="main-left col-sm-8 hidden-xs">
-        <div class="list">
-            <div class="record clearfix" data-array="list" style="position:relative;display: none">
-                <div class="f1 code-main clearfix">
-                    <div class="tittle" data-name="title">我是标题</div>
-                    <div class="code">
-                    <pre data-name="code"></pre><a class="toggle-code"></a>
-                    </div>
-                </div>
-                <div class="f1 value" data-name="value"></div>
-                <div class="language" data-name="language"></div>
-                <div class="tag">
-                    <span class="label label-info" data-array="tags" data-iter="tag">
-                        <span data-name="tag"></span>
-                    </span>
-                </div>
-                <div class="user">用户</div>
-            </div>
-        </div>
+        <div id="dataList"> </div>
         <div class="page"></div>
     </div>
     <div class="main-right col-sm-offset-1 col-sm-3 hidden-xs">
@@ -84,12 +67,35 @@
         222222
     </div>
 </div>
+
+
+
+
 <%@include file="../footer.jsp" %>
 <%@include file="../js.jsp" %>
+<script id="listTemplate" type="text/x-jquery-tmpl">
+<div class="record clearfix" style="position:relative">
+    <div class="f1 code-main clearfix">
+        <div class="tittle">${title}</div>
+        <div class="code">
+            <pre>${code}</pre>
+            <a class="toggle-code"></a>
+        </div>
+    </div>
+    <div class="f1 value">${value}</div>
+    <div class="language">${language}</div>
+    <div class="tag">
+        {{each tags}}
+        <span class="label label-info">${$value}</span>
+        {{/each}}
+    </div>
+    <div class="user">用户</div>
+</div>
+</script>
 <script>
     var pageSize = 5;
     var option = {
-        dataDiv: $(".list"),
+        dataDiv: $("#dataList"),
         page: {
             cont: $(".page"), // 容器。值支持id名、原生dom对象，jquery对象,
             skip: true,
@@ -116,7 +122,7 @@
         var hash =location.hash;
         var page = hash.split('=')[1]||1;
         option.para.pageNum = page;
-        ME.DataGrid.loadData(option);
+        ME.loadData(option);
     });
 
 

@@ -12,25 +12,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class PageEntity<T> extends Page<T>{
-    private List<T> list;
-    private int pageNumber;
-    private int pageSize;
-    private int totalPage;
-    private int totalRow;
 
     public PageEntity(List<T> list, int pageNumber, int pageSize, int totalRow) {
-        this.list = list;
-        this.pageNumber = pageNumber;
-        this.pageSize = pageSize;
-        this.totalPage = (totalRow - 1) / pageSize + 1;
-        this.totalRow = totalRow;
-    }
-
-    public boolean isFirstPage() {
-        return this.pageNumber == 1;
-    }
-
-    public boolean isLastPage() {
-        return this.pageNumber >= this.totalPage;
+        super(list,pageNumber,pageSize,(totalRow - 1) / pageSize + 1,totalRow);
     }
 }

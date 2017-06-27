@@ -1,19 +1,18 @@
 /**
  * Created by Administrator on 2017/6/2.
  */
-var ME = (function (me) {
-    var Handler = {};
-    Handler.errorMap = [];
+;!function (w) {
+    var me = w.ME ||{};
+    var errorMap = [];
 
-
-    Handler.dealError = function (response) {
-        if (Handler.errorMap[response.code]) {
-            Handler.errorMap[response.code](response)
+    me.dealError = function (response) {
+        if (errorMap[response.code]) {
+            errorMap[response.code](response)
         }else {
             layer.alert(response.msg);
         }
     };
-    Handler.valid=function(dom,value,valid) {
+    me.valid=function(dom,value,valid) {
         var ico = dom.find('span')
         if (valid(value)) {
             dom.removeClass('has-error');
@@ -29,5 +28,5 @@ var ME = (function (me) {
             return false;
         }
     }
-    me.Handler = Handler;
-})(ME||{});
+    w.ME = me;
+}(window);

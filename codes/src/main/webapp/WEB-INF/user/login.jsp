@@ -57,7 +57,7 @@
             if (response.success) {
                 window.location.href = '/';
             } else {
-                ME.Handler.dealError(response);
+                ME.dealError(response);
             }
         });
         return false;

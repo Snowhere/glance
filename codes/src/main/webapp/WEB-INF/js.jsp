@@ -10,9 +10,11 @@
 <!-- Bootstrap-->
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+<!-- others -->
+<script src="/js/jquery.tmpl.min.js"></script>
 <!-- mine-->
-<script type="text/javascript" src="/js/datagrid.js"></script>
-<%--<script type="text/javascript" src="/js/handler.js"></script>--%>
+<script src="/js/datagrid.js"></script>
+<script src="/js/handler.js"></script>
 <script>
     $.ajaxSetup({
         error: function () {

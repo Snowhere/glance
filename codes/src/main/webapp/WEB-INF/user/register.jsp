@@ -70,13 +70,13 @@
         $('#captchaImg')[0].src = '/user/captcha?' + new Date().getTime();
     }
     $('#username').blur(function () {
-        ME.Handler.valid($('#usernameDiv'), $(this).val(), validUsername);
+        ME.valid($('#usernameDiv'), $(this).val(), validUsername);
     });
     $('#password').blur(function () {
-        ME.Handler.valid($('#passwordDiv'), $(this).val(), validPassword);
+        ME.valid($('#passwordDiv'), $(this).val(), validPassword);
     });
     $('#repeat').blur(function () {
-        ME.Handler.valid($('#repeatDiv'), $(this).val(), validRepeat);
+        ME.valid($('#repeatDiv'), $(this).val(), validRepeat);
     });
 
     //换验证码
@@ -85,7 +85,7 @@
     });
     //提交
     $('#submitForm').submit(function () {
-        if (ME.Handler.valid($('#usernameDiv'), $('#username').val(), validUsername) && ME.Handler.valid($('#passwordDiv'), $('#password').val(), validPassword) && ME.Handler.valid($('#repeatDiv'), $('#repeat').val(), validRepeat)) {
+        if (ME.valid($('#usernameDiv'), $('#username').val(), validUsername) && ME.valid($('#passwordDiv'), $('#password').val(), validPassword) && ME.valid($('#repeatDiv'), $('#repeat').val(), validRepeat)) {
             $.getJSON('/user/userRegister', {
                 username: $('#username').val(),
                 password: $('#password').val(),
@@ -96,7 +96,7 @@
                     window.location.href = '/';
                 } else {
                     changeCaptcha();
-                    ME.Handler.dealError(response);
+                    ME.dealError(response);
                 }
             });
         }
