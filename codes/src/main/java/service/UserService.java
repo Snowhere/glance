@@ -116,4 +116,8 @@ public class UserService {
         List<String> usernames = Redis.use().lrange(CacheName.USERS,0,-1);
         return usernames == null || !usernames.contains(username) ;
     }
+
+    public List<User> getTopUser() {
+        return User.dao.getTopUser();
+    }
 }

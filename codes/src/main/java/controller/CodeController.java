@@ -5,8 +5,12 @@ import Entity.PageEntity;
 import annotation.DI;
 import annotation.Role;
 import model.Code;
+import model.User;
 import service.CodeService;
 import util.Response;
+
+import java.util.Date;
+import java.util.List;
 
 public class CodeController extends BaseController {
     @DI
@@ -20,15 +24,29 @@ public class CodeController extends BaseController {
         render("");
     }
 
+    public void search() {
+        renderJsp("list.jsp");
+    }
+
     /**
      * 详情
      */
     public void detail() {
-        render("");
+        Long id = getParaToLong();
+        Code code = Code.dao.findById(id);
+        if (code == null) {
+            renderError(404);
+        }else {
+            setAttr("code", code);
+            render("detail.jsp");
+        }
+
     }
 
-    public void search() {
-        renderJsp("list.jsp");
+    public void post() {
+        List<String> languageList = Code.LANGUAGE_LIST;
+        setAttr("languages", languageList);
+        renderJsp("post.jsp");
     }
 
     public void codeSearch() {
@@ -44,5 +62,17 @@ public class CodeController extends BaseController {
      */
     public void getLanguageList() {
         renderJson(Code.LANGUAGE_LIST);
+    }
+
+    /**
+     * 提交
+     */
+    public void doPost() {
+        Code code = getModel(Code.class);
+        User user = getSessionAttr("user");
+        code.set("submitter", user.get("id"));
+        code.set("create_time", new Date());
+        code.set("update_time", new Date());
+        codeService.saveCode(code);
     }
 }

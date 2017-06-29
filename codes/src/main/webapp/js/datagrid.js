@@ -4,7 +4,7 @@
 
     me.loadData = function (option) {
         layer.load(1, {
-            shade: [0.8, "#393D49"],
+            shade: [0.8, "#DDDDDD"],
             time: 300
         });
         $.ajax({

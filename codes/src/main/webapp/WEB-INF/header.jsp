@@ -14,7 +14,7 @@
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
-            <a href="#" type="button" class="btn btn-default">提交代码</a>
+            <a href="/code/post" type="button" class="btn btn-default">提交代码</a>
         </div>
         <div class="navbar-right col-sm-4">
             <c:if test="${user!=null}">

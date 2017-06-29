@@ -40,11 +40,11 @@ public class UserController extends BaseController {
 
     /**
      * 个人信息
-     * /user/userId
+     * /user/info/userId
      * 区分本人和其他人查看
      * jsp
      */
-    public void index() {
+    public void info() {
         User currentUser = getSessionAttr("user");
         Long userId = getParaToLong(0);
         Map<String, Object> info = userService.info(userId);

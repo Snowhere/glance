@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <footer>
     <div class="container" style="text-align: center;margin-top: 20px;">
-        <p>Copyright © 2017 CodesGlance. Made By Snowhere</p>
+        <p>Copyright © 2017 CodesGlance. Made By <a href="http://snowhere.me">Snowhere</a></p>
     </div>
 </footer>
 

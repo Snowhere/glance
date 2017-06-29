@@ -4,6 +4,7 @@
 <head>
     <%@include file="../css.jsp" %>
     <style>
+        /*左侧列表*/
         .f1 {
             float: left;
         }
@@ -18,7 +19,7 @@
 
         .record {
             padding: 20px;
-
+            border-bottom: 1px solid #ddd;
         }
 
         pre {
@@ -26,7 +27,7 @@
         }
 
         .language {
-            background-color: blue;
+            background-color:deepskyblue;
             color: white;
             display: block;
             height: 22px;
@@ -52,7 +53,18 @@
             float: left;
         }
         .page{
-            margin: 0 auto;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        /*右侧用户*/
+        .main-right{
+            background-color: white;
+            margin-bottom: 20px;
+        }
+
+        .ad{
+
         }
     </style>
 </head>
@@ -67,7 +79,10 @@
         11111111111
     </div>
     <div class="main-right col-sm-offset-1 col-sm-3 hidden-xs">
-        222222
+        <a class="ad" href="http://game.snowhere.me/1010"><img src="/img/ad1.jpg" class="img-responsive" alt="广告位1"></a>
+    </div>
+    <div class="main-right col-sm-offset-1 col-sm-3 hidden-xs">
+        <a class="ad" href="http://say.zzubox.com/"><img src="/img/ad2.jpg" class="img-responsive" alt="广告位2"></a>
     </div>
 </div>
 

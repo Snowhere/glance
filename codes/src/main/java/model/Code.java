@@ -56,4 +56,7 @@ public class Code extends Model<Code> {
         return paginate(pageNum, pageSize, "select * from `code` ", "where type=? order by weight desc", language);
     }
 
+    public List<Code> getTopCode() {
+        return find("select * from `code` limit 0,5");
+    }
 }

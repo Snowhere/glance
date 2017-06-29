@@ -1,12 +1,12 @@
 package interceptor;
 
+import annotation.Role;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
 import model.User;
 import util.ErrorEnum;
 import util.Response;
-import annotation.Role;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +19,7 @@ import java.util.Set;
  * @create 2017-05-12
  **/
 public class RoleInterceptor implements Interceptor {
+
 
     @Override
     public void intercept(Invocation invocation) {
@@ -60,6 +61,7 @@ public class RoleInterceptor implements Interceptor {
 
     /**
      * 检查是否有权限
+     *
      * @param invocation
      * @param role
      * @return

@@ -21,4 +21,8 @@ public class User extends Model<User> {
         }
         return result;
     }
+
+    public List<User> getTopUser() {
+        return this.find("select * from `user` limit 0,5");
+    }
 }

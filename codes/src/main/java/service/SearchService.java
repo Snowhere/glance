@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
  * @author STH
  * @create 2017-06-19
  **/
-public class ESearch {
+public class SearchService {
 
     public void create() throws UnknownHostException {
         // on startup

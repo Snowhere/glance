@@ -12,10 +12,12 @@ import com.jfplugin.mail.MailPlugin;
 import controller.CodeController;
 import controller.IndexController;
 import controller.UserController;
+import interceptor.ConstantInfoInterceptor;
 import interceptor.RoleInterceptor;
 import model.Code;
 import model.User;
 import model.UserAuth;
+import util.BeanFactory;
 
 /**
  * API引导式配置
@@ -73,7 +75,8 @@ public class Config extends JFinalConfig {
 
     @Override
     public void configInterceptor(Interceptors me) {
-        me.add(new RoleInterceptor());
+        me.add(BeanFactory.getInstance().getBean(RoleInterceptor.class));
+        me.add(BeanFactory.getInstance().getBean(ConstantInfoInterceptor.class));
     }
 
     @Override

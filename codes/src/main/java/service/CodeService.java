@@ -2,9 +2,11 @@ package service;
 
 import Entity.CodeEntity;
 import Entity.PageEntity;
+import model.Code;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * code
@@ -42,5 +44,13 @@ public class CodeService {
             codeEntities.add(codeEntity);
         }
         return new PageEntity<CodeEntity>(codeEntities,pageNum,pageSize,1000);
+    }
+
+    public List<Code> getTopCode() {
+        return Code.dao.getTopCode();
+    }
+
+    public boolean saveCode(Code code) {
+        return code.save();
     }
 }
