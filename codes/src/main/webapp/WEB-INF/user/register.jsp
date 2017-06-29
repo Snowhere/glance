@@ -8,13 +8,12 @@
 <%@include file="../header.jsp" %>
 
 <div class="container center-block">
-    <h2>注册</h2>
-    <form id="submitForm" class="form-horizontal">
+    <form id="submitForm" class="form-horizontal col-sm-offset-2 col-sm-8">
         <div id="usernameDiv" class="form-group has-feedback">
             <label for="username" class="col-sm-3 control-label">用户名</label>
             <div class="col-sm-7">
                 <input type="text" required="required" class="form-control" id="username"
-                       placeholder="4-16位数字、字母、下划线，不能是纯数字或纯下划线">
+                       placeholder="4-16位数字字母下划线，不能是纯数字或下划线">
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
@@ -36,14 +35,13 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">验证码</label>
             <div class="col-sm-7">
+                 <input required="required" class="form-control col-sm-3" id="captcha" placeholder="输入验证码">
                 <a href="#" class="col-sm-2"><img id="captchaImg" src="/user/captcha"></img></a>
-                <input required="required" class="form-control col-sm-3" id="captcha" placeholder="captcha">
+
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-4">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
+        <div class="btn-group" style="display: table; width: auto;margin:10px auto;">
+            <button type="submit" class="btn btn-default">注册</button>
         </div>
     </form>
 </div>

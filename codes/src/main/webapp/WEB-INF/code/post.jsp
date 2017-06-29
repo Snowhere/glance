@@ -17,15 +17,22 @@
 <div class="container center-block">
     <div class="main-left col-sm-8 hidden-xs">
         <form id="submitForm">
-            <select name="language" class="form-control">
-                <c:forEach items="${languages}" varStatus="i" var="language">
-                    <option value="${language}">${language}</option>
-                </c:forEach>
-            </select>
-            <textarea name="code" class="form-control" rows="30"></textarea>
-            <textarea name="" class="form-control" rows="4"></textarea>
-            <textarea name="" class="form-control" rows="4"></textarea>
-            <textarea name="" class="form-control" rows="4"></textarea>
+            <div class="form-inline">
+                <select name="language" class="form-control">
+                    <c:forEach items="${languages}" varStatus="i" var="language">
+                        <option value="${language}">${language}</option>
+                    </c:forEach>
+                </select>
+                <input class="form-control" style="width:60%" type="text" placeholder="标签，用英文逗号分隔">
+            </div>
+            <textarea name="" class="form-control" rows="4" placeholder="依赖包或者库"></textarea>
+            <textarea name="code" class="form-control" rows="22" placeholder="代码主体"></textarea>
+            <textarea name="" class="form-control" rows="4" placeholder="描述"></textarea>
+            <textarea name="" class="form-control" rows="4" placeholder="注意"></textarea>
+            <textarea name="" class="form-control" rows="4" placeholder="其他"></textarea>
+            <div class="btn-group" style="display: table; width: auto;margin:10px auto;" >
+                <button type="submit" style="margin: 10px auto" class="btn btn-default">提交</button>
+            </div>
         </form>
     </div>
 

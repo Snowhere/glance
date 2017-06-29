@@ -9,6 +9,7 @@ import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
+import controller.AboutController;
 import controller.CodeController;
 import controller.IndexController;
 import controller.UserController;
@@ -42,6 +43,7 @@ public class Config extends JFinalConfig {
         me.add("/", IndexController.class, "/WEB-INF/index");
         me.add("/user", UserController.class, "/WEB-INF/user");
         me.add("/code", CodeController.class, "/WEB-INF/code");
+        me.add("/about", AboutController.class, "/WEB-INF/about");
     }
 
 

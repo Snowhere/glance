@@ -8,8 +8,7 @@
 <%@include file="../header.jsp" %>
 
 <div class="container center-block">
-    <h2>登录</h2>
-    <form id="submitForm" class="form-horizontal">
+    <form id="submitForm" class="form-horizontal col-sm-offset-3 col-sm-6">
         <div id="usernameDiv" class="form-group has-feedback">
             <label for="username" class="col-sm-3 control-label">用户名</label>
             <div class="col-sm-7">
@@ -20,7 +19,7 @@
         <div id="passwordDiv" class="form-group has-feedback">
             <label for="password" class="col-sm-3 control-label">密码</label>
             <div class="col-sm-7">
-                <input type="password" required="required" class="form-control" id="password" placeholder="password">
+                <input type="password" required="required" class="form-control" id="password" placeholder="输入密码">
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
         </div>
@@ -29,14 +28,13 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">验证码</label>
             <div class="col-sm-7">
+
+                <input required="required" class="form-control col-sm-3" id="captcha" placeholder="输入验证码">
                 <a href="#" class="col-sm-2"><img id="captchaImg" src="/user/captcha"></img></a>
-                <input required="required" class="form-control col-sm-3" id="captcha" placeholder="captcha">
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-4">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
+        <div class="btn-group" style="display: table; width: auto;margin:10px auto;">
+            <button type="submit" class="btn btn-default">登录</button>
         </div>
     </form>
 </div>
