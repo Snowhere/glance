@@ -16,19 +16,21 @@ import java.net.UnknownHostException;
  * @create 2017-06-19
  **/
 public class SearchService {
+    private TransportClient client;
 
-    public void create() throws UnknownHostException {
+    public SearchService() throws UnknownHostException {
+        client = TransportClient.builder().build()
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("host1"), 9300))
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("host2"), 9300));
+    }
+
+    public void create() {
         // on startup
         //Settings settings = Settings.settingsBuilder().put("cluster.name", "myClusterName").build();
         //TransportClient client = TransportClient.builder().settings(settings).build();
-        TransportClient client = TransportClient.builder().build()
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("host1"), 9300))
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("host2"), 9300));
-
-
         // on shutdown
         GetResponse response = client.prepareGet("twitter", "tweet", "1").get();
-        client.close();
+        //client.close();
         ObjectMapper objectMapper = Jackson.getJson().getObjectMapper();
     }
 
