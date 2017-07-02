@@ -1,8 +1,9 @@
 package service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jfinal.json.Jackson;
+import com.jfinal.kit.JsonKit;
+import lombok.extern.log4j.Log4j;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
@@ -15,23 +16,44 @@ import java.net.UnknownHostException;
  * @author STH
  * @create 2017-06-19
  **/
+@Log4j
 public class SearchService {
     private TransportClient client;
 
-    public SearchService() throws UnknownHostException {
-        client = TransportClient.builder().build()
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("host1"), 9300))
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("host2"), 9300));
+    public SearchService() {
+       init();
     }
 
-    public void create() {
-        // on startup
-        //Settings settings = Settings.settingsBuilder().put("cluster.name", "myClusterName").build();
-        //TransportClient client = TransportClient.builder().settings(settings).build();
-        // on shutdown
-        GetResponse response = client.prepareGet("twitter", "tweet", "1").get();
+    private void init() {
+        try {
+            client = TransportClient.builder().build()
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("47.90.53.246"), 9200));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void create(Object object) {
+        String json = JsonKit.toJson(object);
+        log.info(json);
+        IndexResponse response = client.prepareIndex("test-index", "test-type")
+                //必须为对象单独指定ID
+                .setId("1")
+                .setSource(json)
+                .execute()
+                .actionGet();
+        //多次index这个版本号会变
+        System.out.println("response.version():" + response.getVersion());
+
+    }
+
+    public String get() {
+        GetResponse response = client.prepareGet("test-index", "test-type", "1").get();
         //client.close();
-        ObjectMapper objectMapper = Jackson.getJson().getObjectMapper();
+        return response.getSourceAsString();
     }
 
+    public void close() {
+        client.close();
+    }
 }
