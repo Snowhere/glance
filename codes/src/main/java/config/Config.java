@@ -18,6 +18,7 @@ import interceptor.RoleInterceptor;
 import model.Code;
 import model.User;
 import model.UserAuth;
+import service.SearchService;
 import util.BeanFactory;
 
 /**
@@ -53,19 +54,22 @@ public class Config extends JFinalConfig {
     public void configPlugin(Plugins me) {
         Prop prop = PropKit.use("config.properties");
 
+        //elastic search
+        SearchService searchService = BeanFactory.getInstance().getBean(SearchService.class);
+        searchService.init(prop.get("es.host"), prop.getInt("es.port"));
+
         //email
         me.add(new MailPlugin(PropKit.use("smtp.properties").getProperties()));
 
-        // Redis
+        //Redis
         RedisPlugin redisPlugin = new RedisPlugin(prop.get("redis.cache"), prop.get("redis.host"), prop.get("redis.password"));
         me.add(redisPlugin);
 
-        // 配置C3p0数据库连接池插件
+        //c3p0 mysql activeRecord
         C3p0Plugin c3p0Plugin = new C3p0Plugin(
                 prop.get("db.host"), prop.get("db.username"), prop.get("db.password"));
         me.add(c3p0Plugin);
 
-        // 配置ActiveRecord插
         ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
         arp.setShowSql(true);
         me.add(arp);
@@ -87,5 +91,10 @@ public class Config extends JFinalConfig {
 
     public void configEngine(Engine engine) {
 
+    }
+
+    public void beforeJFinalStop() {
+        SearchService searchService = BeanFactory.getInstance().getBean(SearchService.class);
+        searchService.close();
     }
 }

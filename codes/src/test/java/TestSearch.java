@@ -9,8 +9,8 @@ public class TestSearch {
         User user = new User();
         user.set("name", "test");
         SearchService searchService = new SearchService();
-        searchService.create(user);
-        System.out.println(searchService.get());
+        searchService.create(user,"test-index","test-type","1");
+        System.out.println(searchService.get("test-index","test-type","1"));
         searchService.close();
     }
 }

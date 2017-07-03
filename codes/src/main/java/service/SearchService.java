@@ -4,8 +4,11 @@ import com.jfinal.kit.JsonKit;
 import lombok.extern.log4j.Log4j;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -20,37 +23,45 @@ import java.net.UnknownHostException;
 public class SearchService {
     private TransportClient client;
 
-    public SearchService() {
-       init();
-    }
-
-    private void init() {
+    public void init(String host,int port) {
         try {
             client = TransportClient.builder().build()
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("47.90.53.246"), 9200));
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host),port));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
     }
 
-    public void create(Object object) {
+    public IndexResponse create(Object object, String index, String type, String id) {
         String json = JsonKit.toJson(object);
-        log.info(json);
-        IndexResponse response = client.prepareIndex("test-index", "test-type")
-                //必须为对象单独指定ID
-                .setId("1")
+        log.info("put to es :" + json);
+        IndexResponse response = client.prepareIndex(index, type)
+                .setId(id)
                 .setSource(json)
                 .execute()
                 .actionGet();
-        //多次index这个版本号会变
-        System.out.println("response.version():" + response.getVersion());
-
+        return response;
     }
 
-    public String get() {
-        GetResponse response = client.prepareGet("test-index", "test-type", "1").get();
-        //client.close();
-        return response.getSourceAsString();
+    public GetResponse get(String index, String type, String id) {
+        GetResponse response = client.prepareGet(index, type, id).get();
+        return response;
+    }
+
+    public String getData(String index, String type, String id) {
+        return get(index, type, id).getSourceAsString();
+    }
+
+    public SearchResponse search(String keyword, String index, String type) {
+        SearchResponse response = client.prepareSearch(index)
+                .setTypes(type)
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.termQuery("multi", "test"))
+                //.setPostFilter(QueryBuilders.rangeQuery("age").from(12).to(18))
+                .setFrom(0).setSize(60).setExplain(true)
+                .execute()
+                .actionGet();
+        return response;
     }
 
     public void close() {
